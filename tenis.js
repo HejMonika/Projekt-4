@@ -56,9 +56,11 @@ function ball() {
 	//sprawdzenie czy piłka nie dotknęła krawędzi stołu
 	if (ballY <= 0 || ballY + ballSize >= ch) {
 		ballSpeedY = -ballSpeedY;
+		speedUp();
 	}
 	if (ballX <= 0 || ballX + ballSize >= cw) {
 		ballSpeedX = -ballSpeedX;
+		speedUp();
 	}
 }
 
@@ -80,6 +82,33 @@ topCanvas = canvas.offsetTop;
 function playerPosition(e) {
 	// console.log("Pozycja myszy to " + e.clientY - topCanvas);
 	playerY = e.clientY - topCanvas - paddleHeight / 2;
+
+	if (playerY >= ch - paddleHeight) {
+		playerY = ch - paddleHeight;
+	}
+
+	if (playerY <= 0) {
+		playerY = 0;
+	}
+
+	//aiY = playerY;
+}
+
+// przyspieszenie
+function speedUp() {
+	//console.log(ballSpeedX + ", " + ballSpeedY);
+	//prędkość X
+	if (ballSpeedX > 0 && ballSpeedX < 16) {
+		ballSpeedX += 1;
+	} else if (ballSpeedX < 0 && ballSpeedX > -16) {
+		ballSpeedX -= 1;
+	}
+	//prędkość Y
+	if (ballSpeedY > 0 && ballSpeedY < 16) {
+		ballSpeedY += 1;
+	} else if (ballSpeedX < 0 && ballSpeedY > -16) {
+		ballSpeedY -= 1;
+	}
 }
 
 // nasłuchiwanie zdarzenia: ruch myszką
